@@ -1,12 +1,17 @@
 package tfr.Tools.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 
 
 @Entity
@@ -20,13 +25,41 @@ public class Produto implements Serializable{
 	private Long id;
 	private String name;
 	
+	
+	@ManyToMany
+	@JoinTable(name = "PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name="produto_id"), inverseJoinColumns = @JoinColumn(name="categoria_id")) 
+	private List<Categoria> categorias = new ArrayList<>();
+	
 	public Produto() {}
+
 
 	public Produto(Long id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
 	}
+
+
+
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+
+
+
+
+
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
+	}
+
+
+
+
+
+
 
 	public Long getId() {
 		return id;
