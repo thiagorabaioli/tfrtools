@@ -1,7 +1,6 @@
 package tfr.Tools.entities;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
@@ -11,7 +10,8 @@ import jakarta.persistence.Id;
 
 
 @Entity
-public class Categoria implements Serializable {
+public class Produto implements Serializable{
+
 
 	private static final long serialVersionUID = 1L;
 	
@@ -20,11 +20,9 @@ public class Categoria implements Serializable {
 	private Long id;
 	private String name;
 	
-	private List<E>
-	
-	public Categoria() {}
+	public Produto() {}
 
-	public Categoria(Long id, String name) {
+	public Produto(Long id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -59,10 +57,10 @@ public class Categoria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Produto other = (Produto) obj;
 		return Objects.equals(id, other.id);
 	}
 	
 	
-
+	
 }
