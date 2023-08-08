@@ -3,7 +3,6 @@ package tfr.Tools.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,6 +23,7 @@ public class Estado implements Serializable {
 	private String name;
 	
 	
+  
 	@OneToMany(mappedBy = "estado")
 	private List<Cidade> cidades = new ArrayList<>();
 	
@@ -50,6 +50,7 @@ public class Estado implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 
 	public List<Cidade> getCidades() {
 		return cidades;

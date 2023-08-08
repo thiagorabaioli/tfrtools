@@ -1,10 +1,16 @@
 package tfr.Tools.entities;
 
 import java.util.ArrayList;
+
+
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.ElementCollection;
@@ -26,10 +32,13 @@ public class Cliente {
 	private String nif;
 	private Integer tipo;
 	
+	
+	
 	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 	
-	
+
+	@JsonIgnore
 	@ElementCollection
 	@CollectionTable(name="TELEFONE")
 	private Set<String> telefones = new HashSet<>();
@@ -85,6 +94,7 @@ public class Cliente {
 		this.tipo = tipo.getCod();
 	}
 
+	
 	public List<Endereco> getEnderecos() {
 		return enderecos;
 	}
@@ -93,6 +103,8 @@ public class Cliente {
 		this.enderecos = enderecos;
 	}
 
+
+	
 	public Set<String> getTelefones() {
 		return telefones;
 	}

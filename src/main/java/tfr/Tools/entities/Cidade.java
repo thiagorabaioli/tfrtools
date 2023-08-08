@@ -1,7 +1,12 @@
 package tfr.Tools.entities;
 
 import java.io.Serializable;
+
+
+
 import java.util.Objects;
+
+
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +28,9 @@ public class Cidade implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	
+
+
 	
 	@ManyToOne
 	@JoinColumn(name="estado_id")

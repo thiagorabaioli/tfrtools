@@ -2,6 +2,9 @@ package tfr.Tools.entities;
 
 import java.util.Objects;
 
+
+
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,10 +26,14 @@ public class Endereco {
 	private String localidade;
 	private String cep;
 	
+	
+	
 	@ManyToOne
 	@JoinColumn(name="cidade_id")
 	private Cidade cidade;
 	
+	
+
 	@ManyToOne
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
@@ -95,6 +102,7 @@ public class Endereco {
 		this.cep = cep;
 	}
 
+
 	public Cidade getCidade() {
 		return cidade;
 	}
@@ -102,6 +110,7 @@ public class Endereco {
 	public void setCidade(Cidade cidade) {
 		this.cidade = cidade;
 	}
+
 
 	public Cliente getCliente() {
 		return cliente;
