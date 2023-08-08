@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import tfr.Tools.entities.Categoria;
 import tfr.Tools.entities.Cidade;
+import tfr.Tools.entities.Cliente;
+import tfr.Tools.entities.Endereco;
 import tfr.Tools.entities.Estado;
 import tfr.Tools.entities.Produto;
+import tfr.Tools.entities.enums.TipoCliente;
 import tfr.Tools.repositories.CategoriaRepository;
 import tfr.Tools.repositories.CidadeRepository;
+import tfr.Tools.repositories.ClienteRepository;
+import tfr.Tools.repositories.EnderecoRepository;
 import tfr.Tools.repositories.EstadoRepository;
 import tfr.Tools.repositories.ProdutoRepository;
 
@@ -32,6 +37,13 @@ public class TfrToolsApplication implements CommandLineRunner{
 	
 	@Autowired
 	private CidadeRepository cidadeRepo;
+	
+	
+	
+	@Autowired
+	private ClienteRepository clienteRepo;
+	@Autowired
+	private EnderecoRepository enderecoRepo;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(TfrToolsApplication.class, args);
@@ -69,6 +81,18 @@ public class TfrToolsApplication implements CommandLineRunner{
 
 		estadoRepo.saveAll(Arrays.asList(est1, est2));
 		cidadeRepo.saveAll(Arrays.asList(c1, c2, c3));
+		
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
+
+		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
+		
+		Endereco e1 = new Endereco(null, "Rua Flores em Benfica", "N300", "3DT", "Benfica", "1900-569", cli1, c1);
+		Endereco e2 = new Endereco(null, "Avenida Matos", "N105", "2DT", "Setúbal", "2910-692", cli1, c2);
+		
+		cli1.getEnderecos().addAll(Arrays.asList(e1,e2));
+		
+		clienteRepo.saveAll(Arrays.asList(cli1));
+		enderecoRepo.saveAll(Arrays.asList(e1, e2));
 	}
 
 }
