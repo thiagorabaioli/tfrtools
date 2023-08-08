@@ -2,8 +2,7 @@ package tfr.Tools.entities;
 
 import java.util.Objects;
 
-
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,16 +26,15 @@ public class Endereco {
 	private String cep;
 	
 	
-	
+
+	@JsonIgnore
+	@ManyToOne()
+	@JoinColumn(name="cliente_id")
+	private Cliente cliente;
+
 	@ManyToOne
 	@JoinColumn(name="cidade_id")
 	private Cidade cidade;
-	
-	
-
-	@ManyToOne
-	@JoinColumn(name="cliente_id")
-	private Cliente cliente;
 	
 	public Endereco() {}
 
@@ -103,6 +101,7 @@ public class Endereco {
 	}
 
 
+
 	public Cidade getCidade() {
 		return cidade;
 	}
@@ -110,6 +109,7 @@ public class Endereco {
 	public void setCidade(Cidade cidade) {
 		this.cidade = cidade;
 	}
+
 
 
 	public Cliente getCliente() {

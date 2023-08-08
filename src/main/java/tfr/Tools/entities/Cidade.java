@@ -39,7 +39,6 @@ public class Cidade implements Serializable{
 	
 	public Cidade() {}
 	
-	
 	public Cidade(Long id, String name, Estado estado) {
 		super();
 		this.id = id;
