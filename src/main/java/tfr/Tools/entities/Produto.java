@@ -7,7 +7,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,7 +31,7 @@ public class Produto implements Serializable{
 	private Long id;
 	private String name;
 	
-	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name="produto_id"), inverseJoinColumns = @JoinColumn(name="categoria_id")) 
 	private List<Categoria> categorias = new ArrayList<>();
@@ -43,7 +46,8 @@ public class Produto implements Serializable{
 	}
 
 
-	@OneToMany(mappedBy = "id.produto")
+	@JsonIgnore
+	@OneToMany(mappedBy = "id.produto",  fetch = FetchType.EAGER)
 	private Set<ItemPedido> itens = new HashSet<>();
 	
 	public Set<ItemPedido> getItens() {

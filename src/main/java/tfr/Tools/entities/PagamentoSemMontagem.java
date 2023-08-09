@@ -2,6 +2,8 @@ package tfr.Tools.entities;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Entity;
 import tfr.Tools.entities.enums.EstadoPagamento;
 
@@ -10,6 +12,7 @@ public class PagamentoSemMontagem extends Pagamento {
 	
 	private static final long serialVersionUID = 1L;
 	
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date dataEntrega;
 
 	public PagamentoSemMontagem() {}

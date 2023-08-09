@@ -1,14 +1,18 @@
 package tfr.Tools.entities;
 
 import java.io.Serializable;
+
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,6 +31,8 @@ public class Pedido implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date instante;
 	
 	
@@ -41,7 +47,8 @@ public class Pedido implements Serializable {
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
 	
-	@OneToMany(mappedBy = "id.pedido")
+	@JsonIgnore
+	@OneToMany(mappedBy = "id.pedido",  fetch = FetchType.EAGER)
 	private Set<ItemPedido> itens = new HashSet<>();
 	
 	public Pedido() {}

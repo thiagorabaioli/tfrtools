@@ -3,6 +3,8 @@ package tfr.Tools.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
@@ -24,7 +26,7 @@ public abstract class Pagamento implements Serializable{
 	private Long id;
 	private Integer estado;
 	
-	
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="pedido_id")
 	@MapsId

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.ElementCollection;
@@ -33,8 +34,8 @@ public class Cliente {
 	private String nif;
 	private Integer tipo;
 	
-	
-	@OneToMany(mappedBy = "cliente")
+	@JsonIgnore
+	@OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
 	List<Pedido> pedidos = new ArrayList<>();
 	
 
