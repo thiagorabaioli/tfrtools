@@ -1,6 +1,10 @@
 package tfr.Tools;
 
+
+
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -12,13 +16,20 @@ import tfr.Tools.entities.Cidade;
 import tfr.Tools.entities.Cliente;
 import tfr.Tools.entities.Endereco;
 import tfr.Tools.entities.Estado;
+import tfr.Tools.entities.Pagamento;
+import tfr.Tools.entities.PagamentoComMontagem;
+import tfr.Tools.entities.PagamentoSemMontagem;
+import tfr.Tools.entities.Pedido;
 import tfr.Tools.entities.Produto;
+import tfr.Tools.entities.enums.EstadoPagamento;
 import tfr.Tools.entities.enums.TipoCliente;
 import tfr.Tools.repositories.CategoriaRepository;
 import tfr.Tools.repositories.CidadeRepository;
 import tfr.Tools.repositories.ClienteRepository;
 import tfr.Tools.repositories.EnderecoRepository;
 import tfr.Tools.repositories.EstadoRepository;
+import tfr.Tools.repositories.PagamentoRepository;
+import tfr.Tools.repositories.PedidoRepository;
 import tfr.Tools.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -45,12 +56,22 @@ public class TfrToolsApplication implements CommandLineRunner{
 	@Autowired
 	private EnderecoRepository enderecoRepo;
 	
+	@Autowired
+	private PedidoRepository pedidoRepo;
+	
+	@Autowired
+	private PagamentoRepository  pagamentoRepo;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(TfrToolsApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
+		
+		String pattern = "dd-MM-yyyy";
+		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+		
 		Categoria cat1 = new Categoria(null, "Casa");
 		Categoria cat2 = new Categoria(null, "Escrit]orio");
 		
@@ -79,6 +100,7 @@ public class TfrToolsApplication implements CommandLineRunner{
 		est1.getCidades().addAll(Arrays.asList(c1));
 		est2.getCidades().addAll(Arrays.asList(c2, c3));
 
+
 		estadoRepo.saveAll(Arrays.asList(est1, est2));
 		cidadeRepo.saveAll(Arrays.asList(c1, c2, c3));
 		
@@ -94,6 +116,23 @@ public class TfrToolsApplication implements CommandLineRunner{
 		
 		clienteRepo.saveAll(Arrays.asList(cli1));
 		enderecoRepo.saveAll(Arrays.asList(e1, e2));
+		
+
+	
+
+		Pedido ped1 = new Pedido(null, sdf.parse("09-09-2023"), cli1, e1);
+		Pedido ped2 = new Pedido(null, sdf.parse("10-10-2017"), cli1, e2);
+		
+		Pagamento pagto1 = new PagamentoComMontagem(null, EstadoPagamento.PENDENTE, ped1, sdf.parse("09-08-2023"));
+		ped1.setPagamento(pagto1);
+
+		Pagamento pagto2 = new PagamentoSemMontagem(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("10-08-2023"));
+		ped2.setPagamento(pagto2);
+
+		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+
+		pedidoRepo.saveAll(Arrays.asList(ped1, ped2));
+		pagamentoRepo.saveAll(Arrays.asList(pagto1, pagto2));
 	}
 
 }

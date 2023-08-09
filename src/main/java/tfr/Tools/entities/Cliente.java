@@ -33,6 +33,10 @@ public class Cliente {
 	private String nif;
 	private Integer tipo;
 	
+	
+	@OneToMany(mappedBy = "cliente")
+	List<Pedido> pedidos = new ArrayList<>();
+	
 
 	
 	@OneToMany(mappedBy="cliente", fetch = FetchType.EAGER)
@@ -54,6 +58,16 @@ public class Cliente {
 		this.email = email;
 		this.nif = nif;
 		this.tipo = tipo.getCod();
+	}
+	
+	
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 	public Long getId() {
