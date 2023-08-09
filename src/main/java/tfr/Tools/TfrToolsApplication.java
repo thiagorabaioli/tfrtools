@@ -3,8 +3,9 @@ package tfr.Tools;
 
 
 import java.text.SimpleDateFormat;
+
 import java.util.Arrays;
-import java.util.Locale;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -16,6 +17,7 @@ import tfr.Tools.entities.Cidade;
 import tfr.Tools.entities.Cliente;
 import tfr.Tools.entities.Endereco;
 import tfr.Tools.entities.Estado;
+import tfr.Tools.entities.ItemPedido;
 import tfr.Tools.entities.Pagamento;
 import tfr.Tools.entities.PagamentoComMontagem;
 import tfr.Tools.entities.PagamentoSemMontagem;
@@ -28,6 +30,7 @@ import tfr.Tools.repositories.CidadeRepository;
 import tfr.Tools.repositories.ClienteRepository;
 import tfr.Tools.repositories.EnderecoRepository;
 import tfr.Tools.repositories.EstadoRepository;
+import tfr.Tools.repositories.ItemPedidoRepository;
 import tfr.Tools.repositories.PagamentoRepository;
 import tfr.Tools.repositories.PedidoRepository;
 import tfr.Tools.repositories.ProdutoRepository;
@@ -62,6 +65,9 @@ public class TfrToolsApplication implements CommandLineRunner{
 	@Autowired
 	private PagamentoRepository  pagamentoRepo;
 	
+	@Autowired
+	ItemPedidoRepository itemPedidoRepo;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(TfrToolsApplication.class, args);
 	}
@@ -69,8 +75,8 @@ public class TfrToolsApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-		String pattern = "dd-MM-yyyy";
-		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		
 		Categoria cat1 = new Categoria(null, "Casa");
 		Categoria cat2 = new Categoria(null, "Escrit]orio");
@@ -123,16 +129,29 @@ public class TfrToolsApplication implements CommandLineRunner{
 		Pedido ped1 = new Pedido(null, sdf.parse("09-09-2023"), cli1, e1);
 		Pedido ped2 = new Pedido(null, sdf.parse("10-10-2017"), cli1, e2);
 		
-		Pagamento pagto1 = new PagamentoComMontagem(null, EstadoPagamento.PENDENTE, ped1, sdf.parse("09-08-2023"));
+		Pagamento pagto1 = new PagamentoComMontagem(null, EstadoPagamento.PENDENTE, ped1, sdf.parse("12-08-2023"));
 		ped1.setPagamento(pagto1);
 
-		Pagamento pagto2 = new PagamentoSemMontagem(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("10-08-2023"));
+		Pagamento pagto2 = new PagamentoSemMontagem(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("13-08-2023"));
 		ped2.setPagamento(pagto2);
 
 		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
 
 		pedidoRepo.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepo.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, "Nada a observar", 1);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, "Verificar cama",1);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, "Nada a observar", 0);
+
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+
+		itemPedidoRepo.saveAll(Arrays.asList(ip1, ip2, ip3));		
 	}
 
 }
